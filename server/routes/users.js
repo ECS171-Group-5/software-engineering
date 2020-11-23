@@ -37,11 +37,9 @@ db.connect((err) => {
 // });
 
 router.get('/addDummyRow', (req, res) => {
-  // let sql = `INSERT INTO ModelData Values ('${'234-asf-f4-2f2-1325'}', '${'hi this is a test'}')`;
   let sql = `INSERT INTO ModelData Values (?, ?)`;
 
-  // db.query(sql, ['234-asf-f4-2f2-13', 'hi this is a test'], (err, result) => {
-  db.query(sql, ['234-asf-f4-f2-13', 'test'], (err, result) => {
+  db.query(sql, ['234-asf-f4-f2-1', 'test'], (err, result) => {
     if(err) {
       console.log('not good');
       throw err;
