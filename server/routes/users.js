@@ -7,6 +7,7 @@ const uuid = require('uuid');
 require('dotenv').config();
 const cfg = require('../../ModelBuilder/config/config.json');
 const Stocks = require('../../ModelBuilder/DataScraper/DataScraper.js');
+const {spawn} = require('child_process');
 
 router.use(cookieParser())
 
@@ -24,7 +25,7 @@ db.connect((err) => {
   console.log('MySql Connected...');
 });
 
-// // unecessary if database is specified in createConnection funciton
+// unecessary if database is specified in createConnection funciton
 // router.get('/createdb', (req, res) => {
 //   let sql = 'CREATE DATABASE nodemysql';
 //   db.query(sql, (err, result) => {
@@ -64,7 +65,7 @@ function setLimit(req, res) {
 
     let model = fields[0].model;
     model = JSON.parse(model);
-    let model = new Stocks.DataScraper(model.stocks, model.params, modle.period, model.limit);
+    model = new Stocks.DataScraper(model.stocks, model.params, modle.period, model.limit);
 
     model.setLimit(req.body.limit);
     model = JSON.stringify(model)
@@ -108,7 +109,7 @@ function setPeriod(req, res) {
 
     let model = fields[0].model;
     model = JSON.parse(model);
-    let model = new Stocks.DataScraper(model.stocks, model.params, modle.period, model.limit);
+    model = new Stocks.DataScraper(model.stocks, model.params, modle.period, model.limit);
 
     model.setPeriod(req.body.period);
     model = JSON.stringify(model)
@@ -152,7 +153,7 @@ function addParams(req, res) {
 
     let model = fields[0].model;
     model = JSON.parse(model);
-    let model = new Stocks.DataScraper(model.stocks, model.params, modle.period, model.limit);
+    model = new Stocks.DataScraper(model.stocks, model.params, modle.period, model.limit);
 
     model.addParams(req.body.params);
     model = JSON.stringify(model)
@@ -163,7 +164,7 @@ function addParams(req, res) {
       console.log(result);
       res.send('Added params')
     });
-  })]
+  })
 }
 
 router.post('/addParams', (req, res) => {
@@ -196,7 +197,7 @@ function removeParams(req, res) {
 
     let model = fields[0].model;
     model = JSON.parse(model);
-    let model = new Stocks.DataScraper(model.stocks, model.params, modle.period, model.limit);
+    model = new Stocks.DataScraper(model.stocks, model.params, modle.period, model.limit);
 
     model.removeParams(req.body.params);
     model = JSON.stringify(model)
@@ -208,7 +209,6 @@ function removeParams(req, res) {
       res.send('Removed params')
     });
   })
-  });
 }
 
 router.post('/removeParams', (req, res) => {
@@ -241,7 +241,7 @@ function addStocks(req, res) {
 
     let model = fields[0].model;
     model = JSON.parse(model);
-    let model = new Stocks.DataScraper(model.stocks, model.params, modle.period, model.limit);
+    model = new Stocks.DataScraper(model.stocks, model.params, modle.period, model.limit);
 
     model.addStocks(req.body.stocks);
     model = JSON.stringify(model)
@@ -285,7 +285,7 @@ function removeStocks(req, res) {
 
     let model = fields[0].model;
     model = JSON.parse(model);
-    let model = new Stocks.DataScraper(model.stocks, model.params, modle.period, model.limit);
+    model = new Stocks.DataScraper(model.stocks, model.params, modle.period, model.limit);
 
     model.removeStocks(req.body.stocks);
     model = JSON.stringify(model)
@@ -320,6 +320,24 @@ router.post('/removeStocks', (req, res) => {
   }
 });
 
+function runPython(req, res) { 
+  var pydata;
+  
+  // spawns new process
+  const py = spawn('python', ['pytest.py']);
+
+  // collect stdout
+  python.stdout.on('data', function(data) {
+    // console.log('Piping data from python script ...');
+    pydata = data.toString();
+  });
+
+  // make sure child process is closed
+  py.on('close', (code) => {
+    console.log('child process closed with code ${code}');
+  })
+}
+
 function generateModel(req, res) {
   let sql = 'SELECT model FROM ModelData WHERE id = ?';
 
@@ -329,7 +347,7 @@ function generateModel(req, res) {
 
     let model = fields[0].model;
     model = JSON.parse(model);
-    let model = new Stocks.DataScraper(model.stocks, model.params, modle.period, model.limit);
+    model = new Stocks.DataScraper(model.stocks, model.params, modle.period, model.limit);
 
     model.generateModel().then((m) => {
       model = JSON.stringify(model)
