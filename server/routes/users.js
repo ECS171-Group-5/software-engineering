@@ -7,6 +7,7 @@ const uuid = require('uuid');
 require('dotenv').config();
 const cfg = require('../../ModelBuilder/config/config.json');
 const Stocks = require('../../ModelBuilder/DataScraper/DataScraper.js');
+const {spawn} = require('child_process');
 
 router.use(cookieParser())
 
@@ -335,6 +336,24 @@ router.post('/removeStocks', (req, res) => {
     removeStocks(req, res);
   }
 });
+
+function runPython(req, res) { 
+  var pydata;
+  
+  // spawns new process
+  const py = spawn('python', ['pytest.py']);
+
+  // collect stdout
+  python.stdout.on('data', function(data) {
+    // console.log('Piping data from python script ...');
+    pydata = data.toString();
+  });
+
+  // make sure child process is closed
+  py.on('close', (code) => {
+    console.log('child process closed with code ${code}');
+  })
+}
 
 function generateModel(req, res) {
   let sql = 'SELECT model FROM ModelData WHERE id = ?';
