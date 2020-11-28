@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 
 // TODO button is not hooked up
 
-export default class HeaderBar extends Component {
+export default class Home extends Component {
     render() {
         return (
             <div id="homepage">
