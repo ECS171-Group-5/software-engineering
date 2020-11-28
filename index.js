@@ -14,14 +14,14 @@ const Stocks = require('./ModelBuilder/DataScraper/DataScraper.js');
 ///////////////////////////// EXAMPLE /////////////////////////////////
 ///////////////////////////////////////////////////////////////////////
 
-let model = new Stocks.DataScraper();
-model.setLimit(3);
-model.addStocks(['AAPL', 'GOOG', 'GOOGL']);
-model.removeStock(['AAPL', 'GOOG'])
-model.addParams(['shortTermInvestments', 'revenue', 'cashRatio']);
-model.generateModel().then((m) => {
-   console.log(m);
-});
+// let model = new Stocks.DataScraper();
+// model.setLimit(3);
+// model.addStocks(['AAPL', 'GOOG', 'GOOGL']);
+// model.removeStock(['AAPL', 'GOOG'])
+// model.addParams(['shortTermInvestments', 'revenue', 'cashRatio']);
+// model.generateModel().then((m) => {
+//    console.log(m);
+// });
 
 
 /**

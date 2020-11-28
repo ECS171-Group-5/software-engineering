@@ -1,4 +1,9 @@
+html { 
+  height: 100%;
+}
+
 body {
+  height: 100%;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
@@ -10,4 +15,40 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+#root { 
+  height: 100%;
+}
+
+
+/* Header Bar */
+#header { 
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 15px;
+}
+
+.bolded { 
+  font-weight: bold;
+}
+
+#smart-stock { 
+  font-size: 25px;
+  font-weight: bold;
+}
+
+
+/*  Home screen */
+#homepage { 
+  background-color: #a4d1ed;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#homepage-content { /* Lazy way of translating div to center */
+  margin-top: 25%;
 }
