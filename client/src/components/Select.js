@@ -8,7 +8,7 @@ export default class Select extends Component {
         return (
             <div className='main'>
                 <StockTable/>
-                <StatusBar/>
+                <StatusBar index="0"/>
             </div>
         );
     }

@@ -112,7 +112,7 @@ main {
 .tableContainer {
   background-color: white;
   flex: 1 1 auto;
-  margin: 50px 100px;
+  margin: 50px 100px 30px 100px;
   padding: 20px;
   border-radius: 30px;
   padding: 30px;
@@ -143,4 +143,11 @@ main {
 #status-bar {
   flex: 0 1 auto;
   margin-bottom: 40px;
+}
+
+.statusBarText {
+  font-size: 10px;
+  font-weight: 700;
+  fill: #022851;
+  text-anchor: middle;
 }
