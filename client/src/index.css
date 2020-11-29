@@ -19,6 +19,7 @@ code {
 
 #root { 
   height: 100%;
+  background-color: #F1F9FF;
 }
 
 
@@ -42,7 +43,6 @@ code {
 
 /*  Home screen */
 #homepage { 
-  background-color: #a4d1ed;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -51,4 +51,21 @@ code {
 
 #homepage-content { /* Lazy way of translating div to center */
   margin-top: 20%;
+}
+
+
+/* Main center component */
+.main { 
+  height: 100%;
+  padding: 10%;
+}
+
+.main-table { 
+  background-color: white;
+}
+
+.main-title { 
+  font-weight: bold;
+  font-size: 30px;
+  margin: 10px;
 }

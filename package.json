@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/martinpetrov1096/stockapi#readme",
   "dependencies": {
+    "@material-ui/core": "^4.11.1",
     "axios": "^0.21.0",
     "axios-cache-adapter": "^2.5.0",
     "axios-middleware": "^0.3.1",
