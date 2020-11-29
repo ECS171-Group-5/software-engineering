@@ -1,4 +1,8 @@
-html { 
+* {
+  box-sizing: border-box;
+}
+
+html {
   height: 100%;
 }
 
@@ -12,60 +16,131 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-code {
+/* code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
-}
+} */
 
-#root { 
+#root {
   height: 100%;
-  background-color: #F1F9FF;
-}
+  font-family: 'Poppins', sans-serif;
+  /* max-height: 100vh; */
 
+  display: flex;
+  flex-flow: column;
+
+  height: 100%;
+}
 
 /* Header Bar */
-#header { 
+#header {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  margin: 15px;
+  align-items: center;
+  margin: 20px 80px;
+
+  flex: 0 1 auto;
 }
 
-.bolded { 
-  font-weight: bold;
+/* font weights */
+.bold {
+  font-weight: 700;
+}
+.semi-bold {
+  font-weight: 600;
+}
+.medium {
+  font-weight: 500;
+}
+.regular {
+  font-weight: 400;
 }
 
-#smart-stock { 
-  font-size: 25px;
-  font-weight: bold;
+main {
+  background-color: #f1f9ff;
+  /* min-height: 100vh; */
+
+  flex: 1 1 auto;
 }
 
+#smart-stock {
+  font-size: 24px;
+}
+
+#created-by {
+  font-size: 16px;
+}
 
 /*  Home screen */
-#homepage { 
+#homepage {
   height: 100%;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
 }
 
-#homepage-content { /* Lazy way of translating div to center */
-  margin-top: 20%;
+#homeTitle {
+  font-size: 54px;
+  margin: 20px auto;
 }
 
+#homeSubtitle {
+  font-size: 20px;
+  margin: 10px auto 40px;
+}
+
+#homeButton {
+  font-size: 24px;
+  background-color: #022851;
+  color: white;
+  padding: 15px 40px;
+  border-radius: 100vh;
+  outline: none;
+}
 
 /* Main center component */
-.main { 
+.main {
   height: 100%;
-  padding: 10%;
+  /* padding: 10%; */
+  display: flex;
+  flex-flow: column;
+  height: 100%;
 }
 
-.main-table { 
+.tableContainer {
   background-color: white;
+  flex: 1 1 auto;
+  margin: 50px 100px;
+  padding: 20px;
+  border-radius: 30px;
+  padding: 30px;
+  box-shadow: 3px 3px 10px 2px #ccc;
 }
 
-.main-title { 
-  font-weight: bold;
+.table-title {
   font-size: 30px;
   margin: 10px;
+}
+
+#confirm-button-wrapper {
+  display: flex;
+  justify-content: center;
+  margin: 20px;
+}
+
+#confirm-button {
+  text-align: center;
+  background-color: #022851;
+  color: white;
+  font-size: 14px;
+  padding: 15px 40px;
+  border-radius: 100vh;
+  outline: none;
+}
+
+#status-bar {
+  flex: 0 1 auto;
+  margin-bottom: 40px;
 }

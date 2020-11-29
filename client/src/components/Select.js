@@ -6,7 +6,7 @@ import StockTable from './StockTable';
 export default class Select extends Component {
     render() {
         return (
-            <div class='main'>
+            <div className='main'>
                 <StockTable/>
                 <StatusBar/>
             </div>

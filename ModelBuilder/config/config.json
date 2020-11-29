@@ -1,0 +1,18 @@
+{
+   "debug": true,
+   "api": {
+      "baseUrl": "https://financialmodelingprep.com/api/v3/",
+      "cacheDir": "/cache/",
+      "endpoints": {
+         "ratios": "/ratios",
+         "income": "/income-statement",
+         "balance": "/balance-sheet-statement"
+      },
+      "key": "08987cbc82271a6da189c91cddd95d51",
+      "timeBetweenRequests": 100
+   },
+   "params": {
+      "defaultPeriod": "quarter",
+      "defaultLimit": 3
+   }
+}

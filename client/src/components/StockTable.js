@@ -5,21 +5,30 @@ import { TableHead } from '@material-ui/core';
 import { TableCell } from '@material-ui/core';
 import { TableBody } from '@material-ui/core';
 
-const titleRow = ['COMPANY', 'NASDAQ', 'START DATE', 'END DATE'];
+// const titleRow = ['COMPANY', 'NASDAQ', 'START DATE', 'END DATE'];
 
 const sampleData = [
     {company:'Zoom', nasdaq:'ZM', startDate:'2019-04-30', endDate:'2020-07-31'},
+    {company:'Zoom2', nasdaq:'ZM', startDate:'2019-04-30', endDate:'2020-07-31'},
     {company:'Zoom', nasdaq:'ZM', startDate:'2019-04-30', endDate:'2020-07-31'},
+    {company:'Zoom2', nasdaq:'ZM', startDate:'2019-04-30', endDate:'2020-07-31'},
+    {company:'Zoom', nasdaq:'ZM', startDate:'2019-04-30', endDate:'2020-07-31'},
+    {company:'Zoom2', nasdaq:'ZM', startDate:'2019-04-30', endDate:'2020-07-31'},
+    {company:'Zoom', nasdaq:'ZM', startDate:'2019-04-30', endDate:'2020-07-31'},
+    {company:'Zoom2', nasdaq:'ZM', startDate:'2019-04-30', endDate:'2020-07-31'},
+    {company:'Zoom2', nasdaq:'ZM', startDate:'2019-04-30', endDate:'2020-07-31'},
+    {company:'Zoom', nasdaq:'ZM', startDate:'2019-04-30', endDate:'2020-07-31'},
+    {company:'Zoom2', nasdaq:'ZM', startDate:'2019-04-30', endDate:'2020-07-31'},
 ]
 
 export default class StockTable extends Component {
     render() {
         return (
-            <div class='main-table'>
+            <div className='tableContainer'>
 
-                <div class='main-title'>Step 1: Select a stock from our dataset</div>
+                <div className='table-title medium'>Step 1: Select a stock from our dataset</div>
 
-                <Table className='main-table'>
+                <Table className='table-rows'>
                     <TableHead>
                         <TableRow>
                             <TableCell>COMPANY</TableCell>
@@ -29,8 +38,9 @@ export default class StockTable extends Component {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {sampleData.map((row) => (
-                            <TableRow key={row.name}>
+                        {sampleData.map((row, i) => (
+                            // change the key from i to row.company when done
+                            <TableRow key={i}>
                                 <TableCell component="th" scope="row">
                                     {row.company}
                                 </TableCell>
@@ -41,8 +51,9 @@ export default class StockTable extends Component {
                         ))}
                     </TableBody>
                 </Table>
-
-                <div id='confirm-button'>Confirm</div>
+                <div id='confirm-button-wrapper'>
+                    <div id='confirm-button'>Confirm</div>
+                </div>
             </div>
         );
     }

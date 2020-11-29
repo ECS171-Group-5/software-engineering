@@ -2,13 +2,22 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
-import HeaderBar from './components/HeaderBar.js';
+
+// import HeaderBar from './components/HeaderBar.js';
 // import Home from './components/Home.js';
-import Select from './components/Select.js';
+// import Select from './components/Select.js';
 // import Result from './components/Result.js';
 
-ReactDOM.render(<HeaderBar/>, document.getElementById("header-bar"));
-ReactDOM.render(<Select/>, document.getElementById('root'));
+import App from './App';
+
+// ReactDOM.render(<HeaderBar/>, document.getElementById("header-bar"));
+// ReactDOM.render(<Result/>, document.getElementById('root'));
+ReactDOM.render(
+     <React.StrictMode>
+          <App />
+     </React.StrictMode>,
+     document.getElementById('root')
+);
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
