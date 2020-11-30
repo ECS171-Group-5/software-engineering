@@ -122,7 +122,7 @@ main {
   outline: none;
 }
 
-#confirm-button-wrapper {
+.button-wrapper {
   display: flex;
   justify-content: center;
   margin: 20px;
@@ -161,6 +161,7 @@ main {
   background-color: white;
 }
 
+
 /* Status bar */
 #status-bar {
   flex: 0 1 auto;
@@ -172,4 +173,16 @@ main {
   font-weight: 700;
   fill: #022851;
   text-anchor: middle;
+}
+
+
+/* Result */
+#go-back-button { 
+  text-align: center;
+  background-color: #57B8FF;
+  color: white;
+  font-size: 14px;
+  padding: 15px 40px;
+  border-radius: 100vh;
+  outline: none;
 }

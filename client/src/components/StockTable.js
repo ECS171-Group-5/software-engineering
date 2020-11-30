@@ -97,7 +97,7 @@ export default class StockTable extends Component {
                         </TableBody>
                     </Table>
                 </Paper>
-                <div id='confirm-button-wrapper'>
+                <div className='button-wrapper'>
                     <Link to="/Result">
                         <button id='confirm-button'>Confirm</button>
                     </Link>
