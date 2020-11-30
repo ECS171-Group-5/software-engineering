@@ -5,6 +5,7 @@ import { TableHead } from '@material-ui/core';
 import { TableCell } from '@material-ui/core';
 import { TableBody } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
+import {Link} from 'react-router-dom';
 
 const sampleData = [
     {company:'Zoom', nasdaq:'ZM', startDate:'2019-04-30', endDate:'2020-07-31'},
@@ -96,9 +97,10 @@ export default class StockTable extends Component {
                         </TableBody>
                     </Table>
                 </Paper>
-
                 <div id='confirm-button-wrapper'>
-                    <div id='confirm-button'>Confirm</div>
+                    <Link to="/Result">
+                        <button id='confirm-button'>Confirm</button>
+                    </Link>
                 </div>
             </div>
         );
