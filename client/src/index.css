@@ -110,6 +110,25 @@ main {
   height: 100%;
 }
 
+
+/* Select page */
+#confirm-button {
+  text-align: center;
+  background-color: #022851;
+  color: white;
+  font-size: 14px;
+  padding: 15px 40px;
+  border-radius: 100vh;
+  outline: none;
+}
+
+#confirm-button-wrapper {
+  display: flex;
+  justify-content: center;
+  margin: 20px;
+}
+
+/* Table */
 .tableContainer {
   background-color: white;
   flex: 1 1 auto;
@@ -120,25 +139,14 @@ main {
   box-shadow: 3px 3px 10px 2px #ccc;
 }
 
+.table-main { 
+  height: 400px;
+  overflow: auto;
+}
+
 .table-title {
   font-size: 30px;
   margin: 10px;
-}
-
-#confirm-button-wrapper {
-  display: flex;
-  justify-content: center;
-  margin: 20px;
-}
-
-#confirm-button {
-  text-align: center;
-  background-color: #022851;
-  color: white;
-  font-size: 14px;
-  padding: 15px 40px;
-  border-radius: 100vh;
-  outline: none;
 }
 
 .table-head { 
@@ -153,6 +161,7 @@ main {
   background-color: white;
 }
 
+/* Status bar */
 #status-bar {
   flex: 0 1 auto;
   margin-bottom: 40px;
