@@ -100,6 +100,7 @@ main {
   outline: none;
 }
 
+
 /* Main center component */
 .main {
   height: 100%;
@@ -143,4 +144,16 @@ main {
 #status-bar {
   flex: 0 1 auto;
   margin-bottom: 40px;
+}
+
+.table-head { 
+  background-color: lightgray;
+}
+
+.table-row-selected { 
+  background-color: #AADBFF;
+}
+
+.table-row-unselected { 
+  background-color: white;
 }
