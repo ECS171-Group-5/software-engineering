@@ -6,10 +6,10 @@ import StockTable from './StockTable';
 export default class Select extends Component {
     render() {
         return (
-            <div className='main'>
+            <>
                 <StockTable/>
                 <StatusBar index="0"/>
-            </div>
+            </>
         );
     }
 }

@@ -62,12 +62,21 @@ router.get('/createTable', (req, res) => {
 });
 
 // for debugging
-router.get('/getrow/:id', (req, res) => {
-  let sql = `SELECT * FROM ModelData WHERE id = ${req.params.id}`;
-  let query = db.query(sql, (err, result, fields) => {
+router.get('/getRow/:id', (req, res) => {
+  let sql = `SELECT * FROM test WHERE symbol = '${req.params.id}'`;
+  let query = db.query(sql, (err, result) => {
     if (err) throw err;
-    console.log(result);
-    res.json(fields);
+    console.log(`Sending row ${req.params.id} from database`);
+    res.json(result);
+  });
+});
+
+router.get('/getAllRows', (req, res) => {
+  let sql = `SELECT * FROM test`;
+  let query = db.query(sql, (err, result) => {
+    if (err) throw err;
+    console.log("Sending all rows from database");
+    res.json(result);
   });
 });
 
