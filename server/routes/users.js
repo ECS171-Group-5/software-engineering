@@ -81,6 +81,15 @@ router.get('/getAllRows', (req, res) => {
   });
 });
 
+router.get('/getPrediction/:id', (req, res) => {
+  let sql = `SELECT * FROM output WHERE symbol = '${req.params.id}'`;
+  let query = db.query(sql, (err, result) => {
+    if (err) throw err;
+    console.log(`Sending prediction for ${req.params.id} from database`);
+    res.json(result);
+  });
+})
+
 router.get('/getTimeSeries/:symbol', (req, res) => {
   // let sql = `SELECT * FROM test`;
   // let query = db.query(sql, (err, result) => {

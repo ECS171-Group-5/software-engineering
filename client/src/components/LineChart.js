@@ -65,13 +65,13 @@ const LineChart = (props) => {
      .range([PADDING, width - PADDING]);
     const yScale = d3
       .scaleLinear()
-      .domain(d3.extent(data, (d) => d.Open))
+      .domain(d3.extent(data, (d) => d.Close))
       .range([height - PADDING/2, 0]);
 
     const lineGenerator = d3
       .line()
       .x((d) => xScale(d.Date))
-      .y((d) => yScale(d.Open))
+      .y((d) => yScale(d.Close))
       .curve(d3.curveMonotoneX);
 
     const xAxis = d3

@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import StatusBar from './StatusBar';
 import LineChart from './LineChart';
 import {Link} from 'react-router-dom';
-import { TableContainer } from '@material-ui/core';
 import axios from 'axios';
 import * as d3 from "d3";
 
@@ -12,7 +11,8 @@ export default class Result extends Component {
         super(props);
         this.state = {
             data: [],
-            timeSeries: []
+            timeSeries: [],
+            prediction: -1
         };
     }
 
@@ -20,6 +20,12 @@ export default class Result extends Component {
         axios.get(`/api/getRow/${this.props.location.state.stock}`).then(res => {
             this.setState((state, props) => ({
                 data: res.data
+            }));
+        });
+
+        axios.get(`/api/getPrediction/${this.props.location.state.stock}`).then(res => {
+            this.setState((state, props) => ({
+                prediction: res.data[0].result
             }));
         });
 
@@ -39,7 +45,7 @@ export default class Result extends Component {
               };
             }
         
-            for (var d in priceDict) {
+            for (d in priceDict) {
               prices.push(priceDict[d]);
             }
         
@@ -76,13 +82,22 @@ export default class Result extends Component {
                             </div>
                         </div>
                         <div className="resultTopRightContainer">{this.state.data.map((row, i) => {
-                                const startDate = String(row.month).padStart(2,'0')+'-'+row.day+'-'+row.year;
+                                const startDate = String(row.month).padStart(2,'0')+'-'+String(row.day).padStart(2, '0')+'-'+row.year;
                                 const endDate = String(row.month+3>12?row.month-9:row.month+3).padStart(2,'0')+'-'+String(row.day).padStart(2, '0')+'-'+row.year;
                                 const startPrice = row.stockPrice;
-                                const endPrice = 500; // insert
-                                const quarterPrice = 650; // insert
-                                const yearPrice = 1000; // insert
-                                const priceChange = (endPrice-startPrice).toFixed(2);
+                                console.log(this.state.timeSeries.length>0?this.state.timeSeries[this.state.timeSeries.length-1]:startPrice);
+                                var currentPrice = this.state.timeSeries.length>0?this.state.timeSeries[this.state.timeSeries.length-1].Close:startPrice;
+                                var prediction = this.state.prediction;
+                                var quarterPrice = startPrice;
+                                if (prediction!==-1) { // check if prediction has loaded from database
+                                    if (prediction===0)
+                                        quarterPrice = startPrice*1.1;
+                                    else if (prediction===1)
+                                        quarterPrice = startPrice*0.9;
+                                    else if (prediction===2)
+                                        quarterPrice = startPrice;
+                                }
+                                var priceChange = (currentPrice-startPrice).toFixed(2);
 
                                 return (
                                     <div key={i}>
@@ -102,20 +117,20 @@ export default class Result extends Component {
 
                                         <div className="spaceBetween resultText medium" style={{marginTop: "5px"}}>
                                             <div>${startPrice.toFixed(2)}</div>
-                                            <div>${endPrice.toFixed(2)}</div>
+                                            <div>${currentPrice.toFixed(2)}</div>
                                         </div>
                                         <div className="spaceBetween smallText regular darkBlueFont">
                                             <div>START PRICE</div>
-                                            <div>END PRICE</div>
+                                            <div>CURRENT PRICE</div>
                                         </div>
 
                                         <div className="spaceBetween resultText medium greenFont" style={{marginTop: "5px"}}>
-                                            <div>{priceChange>=0?`$${priceChange}`:`-$${Math.abs(priceChange)}`}</div>
-                                            <div>{((endPrice-startPrice)/startPrice*100).toFixed(2)}%</div>
+                                            <div>{priceChange>=0?`$${Math.abs(priceChange).toFixed(2)}`:`-$${Math.abs(priceChange).toFixed(2)}`}</div>
+                                            <div>{((currentPrice-startPrice)/startPrice*100).toFixed(2)}%</div>
                                         </div>
                                         <div className="spaceBetween smallText regular darkBlueFont">
                                             <div>PRICE CHANGE</div>
-                                            <div>PRICE PERCENTAGE CHANGE</div>
+                                            <div>PERCENTAGE CHANGE</div>
                                         </div>
 
 
@@ -130,17 +145,17 @@ export default class Result extends Component {
                                         </div>
                                         <div className="spaceBetween smallText regular darkBlueFont">
                                             <div>STOCK PRICE IN ONE QUARTER</div>
-                                            <div>PRICE PERCENTAGE CHANGE</div>
+                                            <div>QUARTER PERCENTAGE CHANGE</div>
                                         </div>
 
-                                        <div className="spaceBetween resultText medium greenFont" style={{marginTop: "5px"}}>
+                                        {/* <div className="spaceBetween resultText medium greenFont" style={{marginTop: "5px"}}>
                                             <div>${yearPrice.toFixed(2)}</div>
                                             <div>{((yearPrice-startPrice)/startPrice*100).toFixed(2)}%</div>
                                         </div>
                                         <div className="spaceBetween smallText regular darkBlueFont">
                                             <div>STOCK PRICE IN ONE YEAR</div>
                                             <div>PRICE PERCENTAGE CHANGE</div>
-                                        </div>
+                                        </div> */}
                                     </div>
                                 )
                             })}
