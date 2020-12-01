@@ -9,7 +9,7 @@ export default class Home extends Component {
         return (
             <div id="homepage">
                 <h1 id="homeTitle" className="medium">Welcome to Smart Stock</h1>
-                <p id="homeSubtitle" className="regular">A Machine Learning powered tool powered by NASDAQ stocks</p>
+                <p id="homeSubtitle" className="regular">A Machine Learning Powered Tool to Predict NASDAQ Stocks</p>
                 <Link to="/Select">
                     <button id="homeButton" className="medium">Get Started</button>
                 </Link>

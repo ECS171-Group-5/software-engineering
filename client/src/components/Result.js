@@ -1,15 +1,18 @@
 import React, { Component } from 'react';
 import StatusBar from './StatusBar';
+import LineChart from './LineChart';
 import {Link} from 'react-router-dom';
 import { TableContainer } from '@material-ui/core';
 import axios from 'axios';
+import * as d3 from "d3";
 
 // TODO need table for selecting stock, logic for clicking button
 export default class Result extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            data: []
+            data: [],
+            timeSeries: []
         };
     }
 
@@ -17,6 +20,41 @@ export default class Result extends Component {
         axios.get(`/api/getRow/${this.props.location.state.stock}`).then(res => {
             this.setState((state, props) => ({
                 data: res.data
+            }));
+        });
+
+        const url = `/api/getTimeSeries/${this.props.location.state.stock}`;
+        axios.get(url).then(res => {
+            var prices = [];
+            var priceDict = {};
+
+            var priceData = res.data["Time Series (Daily)"];
+            for (var d in priceData) {
+              var a = priceData[d];
+              priceDict[d] = {Date: d,
+                Open: parseFloat(parseFloat(a["1. open"]).toFixed(2)),
+                High: parseFloat(parseFloat(a["2. high"]).toFixed(2)),
+                Low: parseFloat(parseFloat(a["3. low"]).toFixed(2)),
+                Close: parseFloat(parseFloat(a["4. close"]).toFixed(2))
+              };
+            }
+        
+            for (var d in priceDict) {
+              prices.push(priceDict[d]);
+            }
+        
+            prices = prices.slice(0,253);
+            prices = prices.reverse();
+
+            var dateFormat = d3.timeParse("%Y-%m-%d");
+            for (var i = 0; i < prices.length; i++) {
+                prices[i]['Date'] = dateFormat(prices[i]['Date'])
+            }
+
+            console.log(prices);
+
+            this.setState((state, props) => ({
+                timeSeries: prices
             }));
         });
     }
@@ -28,7 +66,14 @@ export default class Result extends Component {
                     <div className="resultTopContainer">
                         <div className="resultTopLeftContainer">
                             <div className='result-title medium'>{this.props.location.state.stock}</div>
-                            <div id="graphContainer">container</div>
+                            <div id="graphContainer">
+                                <LineChart 
+                                    data={this.state.timeSeries} 
+                                    startDate={this.state.data.length>0?String(this.state.data[0].month).padStart(2,'0')+'-'+this.state.data[0].day+'-'+this.state.data[0].year:"09-30-2020"}
+                                    endDate={this.state.data.length>0?String(this.state.data[0].month+3>12?this.state.data[0].month-9:this.state.data[0].month+3).padStart(2,'0')+'-'+String(this.state.data[0].day).padStart(2, '0')+'-'+this.state.data[0].year:"12-31-2020"}
+                                    prediction={1000}
+                                />
+                            </div>
                         </div>
                         <div className="resultTopRightContainer">{this.state.data.map((row, i) => {
                                 const startDate = String(row.month).padStart(2,'0')+'-'+row.day+'-'+row.year;

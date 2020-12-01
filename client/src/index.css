@@ -212,9 +212,9 @@ main {
 }
 
 #graphContainer {
-  border-style: solid;
+  /* border-style: solid;
   border-width: 2px;
-  border-color: black;
+  border-color: black; */
 
   flex: 1 1 auto;
 }
@@ -282,4 +282,23 @@ main {
 
 .pinkFont {
   color: #ff4991;
+}
+
+.chart-area {
+  height: 100%;
+  width: 100%;
+}
+
+.chart-line {
+  stroke-width: 2;
+  stroke: #57b8ff;
+  fill: none;
+}
+
+.chart-marker {
+  stroke: #22543d;
+  stroke-width: 2;
+  fill: #c6f6d5;
+  stroke: none;
+  fill: none;
 }

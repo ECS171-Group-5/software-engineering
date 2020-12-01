@@ -8,6 +8,7 @@ require('dotenv').config();
 const cfg = require('../../ModelBuilder/config/config.json');
 const Stocks = require('../../ModelBuilder/DataScraper/DataScraper.js');
 const {spawn} = require('child_process');
+const axios = require('axios');
 
 router.use(cookieParser())
 
@@ -78,6 +79,20 @@ router.get('/getAllRows', (req, res) => {
     console.log("Sending all rows from database");
     res.json(result);
   });
+});
+
+router.get('/getTimeSeries/:symbol', (req, res) => {
+  // let sql = `SELECT * FROM test`;
+  // let query = db.query(sql, (err, result) => {
+  //   if (err) throw err;
+  //   console.log("Sending all rows from database");
+  //   res.json(result);
+  // });
+
+  const url = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&outputsize=full&symbol=${req.params.symbol}&apikey=R1TE9XCC432MADLL`;
+  axios.get(url).then(response => {
+    res.json(response.data);
+  })
 });
 
 function setLimit(req, res) {
