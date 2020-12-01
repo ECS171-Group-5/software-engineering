@@ -8,19 +8,6 @@ import Paper from '@material-ui/core/Paper';
 import {Link} from 'react-router-dom';
 import axios from 'axios';
 
-// const sampleData = [
-//     {company:'Zoom', nasdaq:'ZM', startDate:'2019-04-30', endDate:'2020-07-31'},
-//     {company:'Zoom2', nasdaq:'ZM', startDate:'2019-04-30', endDate:'2020-07-31'},
-//     {company:'Zoom3', nasdaq:'ZM', startDate:'2019-04-30', endDate:'2020-07-31'},
-//     {company:'Zoom4', nasdaq:'ZM', startDate:'2019-04-30', endDate:'2020-07-31'},
-//     {company:'Zoom5', nasdaq:'ZM', startDate:'2019-04-30', endDate:'2020-07-31'},
-//     {company:'Zoom6', nasdaq:'ZM', startDate:'2019-04-30', endDate:'2020-07-31'},
-//     {company:'Zoom7', nasdaq:'ZM', startDate:'2019-04-30', endDate:'2020-07-31'},
-//     {company:'Zoom8', nasdaq:'ZM', startDate:'2019-04-30', endDate:'2020-07-31'},
-//     {company:'Zoom9', nasdaq:'ZM', startDate:'2019-04-30', endDate:'2020-07-31'},
-//     {company:'Zoom10', nasdaq:'ZM', startDate:'2019-04-30', endDate:'2020-07-31'},
-// ]
-
 export default class StockTable extends Component {
     constructor() { 
         super();
@@ -45,21 +32,12 @@ export default class StockTable extends Component {
     }
 
     handleClick = (event, index) => {
-        // let newSelected = new Array(sampleData.length).fill(false);
-        // newSelected[index] = true;
-        // this.selected = newSelected;
-        // this.setState({
-        //     selected:newSelected
-        // });
-
         this.setState({
             selected:this.state.data[index].symbol
         });
     };
 
-    /* Function returns if a row of index i is selected */
     isSelected = (i) => {
-        // return this.state.selected[i];
         return this.state.selected===this.state.data[i].symbol;
     };
 
@@ -91,7 +69,7 @@ export default class StockTable extends Component {
                         <TableBody>
                             {this.state.data.map((row, i) => {
                                 const isItemSelected = this.isSelected(i);
-                                const startDate = String(row.month).padStart(2,'0')+'-'+row.day+'-'+row.year;
+                                const startDate = String(row.month).padStart(2,'0')+'-'+String(row.day).padStart(2, '0')+'-'+row.year;
                                 const endDate = String(row.month+3>12?row.month-9:row.month+3).padStart(2,'0')+'-'+String(row.day).padStart(2, '0')+'-'+row.year;
 
                                 return (
@@ -105,7 +83,7 @@ export default class StockTable extends Component {
                                         <TableCell component="th" scope="row">
                                             {row.symbol}
                                         </TableCell>
-                                        <TableCell align="right">{row.symbol}</TableCell>
+                                        <TableCell align="right">{row.Names}</TableCell>
                                         <TableCell align="right">{startDate}</TableCell>
                                         <TableCell align="right">{endDate}</TableCell>
                                     </TableRow>

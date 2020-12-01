@@ -5,7 +5,6 @@ import {Link} from 'react-router-dom';
 import axios from 'axios';
 import * as d3 from "d3";
 
-// TODO need table for selecting stock, logic for clicking button
 export default class Result extends Component {
     constructor(props) {
         super(props);
@@ -57,8 +56,6 @@ export default class Result extends Component {
                 prices[i]['Date'] = dateFormat(prices[i]['Date'])
             }
 
-            console.log(prices);
-
             this.setState((state, props) => ({
                 timeSeries: prices
             }));
@@ -66,6 +63,15 @@ export default class Result extends Component {
     }
 
     render() {
+        function addMonths(date, months) {
+            var d = date.getDate();
+            date.setMonth(date.getMonth()+months);
+            if (date.getDate()!==d) {
+                date.setDate(0);
+            }
+            return date;
+        }
+
         return (
             <>
                 <div className="tableContainer">
@@ -75,9 +81,9 @@ export default class Result extends Component {
                             <div id="graphContainer">
                                 <LineChart 
                                     data={this.state.timeSeries} 
-                                    startDate={this.state.data.length>0?String(this.state.data[0].month).padStart(2,'0')+'-'+this.state.data[0].day+'-'+this.state.data[0].year:"09-30-2020"}
-                                    endDate={this.state.data.length>0?String(this.state.data[0].month+3>12?this.state.data[0].month-9:this.state.data[0].month+3).padStart(2,'0')+'-'+String(this.state.data[0].day).padStart(2, '0')+'-'+this.state.data[0].year:"12-31-2020"}
-                                    prediction={1000}
+                                    startDate={this.state.data.length>0?new Date(this.state.data[0].year, this.state.data[0].month-1, this.state.data[0].day): new Date(2020, 8, 30)}
+                                    endDate={this.state.data.length>0?addMonths(new Date(this.state.data[0].year, this.state.data[0].month-1, this.state.data[0].day), 3):new Date()}
+                                    prediction={this.state.prediction}
                                 />
                             </div>
                         </div>
@@ -85,7 +91,6 @@ export default class Result extends Component {
                                 const startDate = String(row.month).padStart(2,'0')+'-'+String(row.day).padStart(2, '0')+'-'+row.year;
                                 const endDate = String(row.month+3>12?row.month-9:row.month+3).padStart(2,'0')+'-'+String(row.day).padStart(2, '0')+'-'+row.year;
                                 const startPrice = row.stockPrice;
-                                console.log(this.state.timeSeries.length>0?this.state.timeSeries[this.state.timeSeries.length-1]:startPrice);
                                 var currentPrice = this.state.timeSeries.length>0?this.state.timeSeries[this.state.timeSeries.length-1].Close:startPrice;
                                 var prediction = this.state.prediction;
                                 var quarterPrice = startPrice;
@@ -147,15 +152,6 @@ export default class Result extends Component {
                                             <div>STOCK PRICE IN ONE QUARTER</div>
                                             <div>QUARTER PERCENTAGE CHANGE</div>
                                         </div>
-
-                                        {/* <div className="spaceBetween resultText medium greenFont" style={{marginTop: "5px"}}>
-                                            <div>${yearPrice.toFixed(2)}</div>
-                                            <div>{((yearPrice-startPrice)/startPrice*100).toFixed(2)}%</div>
-                                        </div>
-                                        <div className="spaceBetween smallText regular darkBlueFont">
-                                            <div>STOCK PRICE IN ONE YEAR</div>
-                                            <div>PRICE PERCENTAGE CHANGE</div>
-                                        </div> */}
                                     </div>
                                 )
                             })}

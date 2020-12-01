@@ -2,9 +2,6 @@ import React, { useState, useEffect, useRef } from "react";
 import * as d3 from "d3";
 import debounce from "lodash/debounce";
 
-// Line chart original example
-// https://bl.ocks.org/gordlea/27370d1eea8464b04538e6d8ced39e89
-
 const PADDING = 50;
 
 function useResize(ref) {
@@ -33,7 +30,7 @@ function useResize(ref) {
 
 const LineChart = (props) => {
   const [lineData, setLineData] = useState();
-  const [markers, setMakers] = useState();
+  const [predictionLine, setPredictionLine] = useState();
 
   const rootRef = useRef(null);
   const xAxisRef = useRef(null);
@@ -41,31 +38,39 @@ const LineChart = (props) => {
   const size = useResize(rootRef);
 
   useEffect(() => {
-    if (!size /* || !props.data*/) {
+    if (!size) {
       return;
     }
 
-    const data = props.data;
+    var data = props.data;
     const startDate = props.startDate;
     const endDate = props.endDate;
     const prediction = props.prediction;
+
+    var slicedData = [];
+     for (var index = data.length-1; index>0; index--) {
+          if (data[index].Date<startDate)
+               break;
+          slicedData.push(data[index]);
+     }
+     data = slicedData;
+
+    var originalPrice = data.length>0?slicedData[slicedData.length-1].Close:0;
+    var predictedPrice = originalPrice;
+    if (prediction===0)
+          predictedPrice*=1.1;
+    else if (prediction===1)
+          predictedPrice*=0.9;
     
     const { width, height } = size;
 
-    var hi = new Date()
-//     const xScale = d3
-//       .scaleLinear()
-//       .domain([0, data.length])
-//       .range([PADDING, width - PADDING]);
      const xScale = d3
      .scaleTime()
-     // .domain(d3.extent(data, function(d) { return d.Date; }))
-     .domain([d3.min(data, function(d) { return d.Date; }), d3.timeDay.offset(d3.max(data, function(d) { return d.Date; }),90)])
-     // .domain([d3.min(data, function(d) { return d.Date; }), d3.timeDay.offset(d3.max(data, function(d) { return d.Date; }),90)])
+     .domain([startDate, Math.max(new Date(), endDate)])
      .range([PADDING, width - PADDING]);
     const yScale = d3
       .scaleLinear()
-      .domain(d3.extent(data, (d) => d.Close))
+      .domain([Math.min(d3.min(data, (d) => d.Close), predictedPrice-predictedPrice/100), Math.max(d3.max(data, (d)=>d.Close), predictedPrice)])
       .range([height - PADDING/2, 0]);
 
     const lineGenerator = d3
@@ -87,6 +92,18 @@ const LineChart = (props) => {
     d3.select(yAxisRef.current).call(yAxis);
 
     setLineData(lineGenerator(data));
+
+    var predictionLineData = [
+         {
+              Date: startDate,
+              Close: originalPrice
+         },
+         {
+              Date: endDate,
+              Close: predictedPrice
+         }
+    ]
+    setPredictionLine(lineGenerator(predictionLineData));
   }, [size, props]);
 
   return (
@@ -107,7 +124,12 @@ const LineChart = (props) => {
           </g>
           <g id="chart">
             {lineData && (
-              <path stroke="#48bb78" className="chart-line" d={lineData} />
+              <path className="chart-line" d={lineData} />
+            )}
+          </g>
+          <g id="chart">
+            {predictionLine && (
+              <path className="chart-line-2" d={predictionLine} />
             )}
           </g>
         </svg>

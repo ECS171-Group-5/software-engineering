@@ -10,11 +10,9 @@ function App() {
     <Router>
       <HeaderBar />
       <main>
-        {/* <div className="App"> */}
           <Route path='/' component={Home} exact />
           <Route path='/Result' component={Result} />
           <Route path='/Select' component={Select} />
-        {/* </div> */}
       </main>
     </Router>
   );
