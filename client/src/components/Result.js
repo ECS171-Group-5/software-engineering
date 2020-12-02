@@ -138,7 +138,6 @@ export default class Result extends Component {
                                             <div>PERCENTAGE CHANGE</div>
                                         </div>
 
-
                                         <div className="textWithDash">
                                             <div className="smallText bold">Predictions&emsp;</div>
                                             <div className="divider"></div>
@@ -146,11 +145,11 @@ export default class Result extends Component {
 
                                         <div className="spaceBetween resultText medium pinkFont" style={{marginTop: "5px"}}>
                                             <div>${quarterPrice.toFixed(2)}</div>
-                                            <div>{((quarterPrice-startPrice)/startPrice*100).toFixed(2)}%</div>
+                                            <div>{this.state.prediction==0?"INCREASE":this.state.prediction==1?"DECREASE":"NO CHANGE"}</div>
                                         </div>
                                         <div className="spaceBetween smallText regular darkBlueFont">
                                             <div>STOCK PRICE IN ONE QUARTER</div>
-                                            <div>QUARTER PERCENTAGE CHANGE</div>
+                                            <div>QUARTER OUTLOOK</div>
                                         </div>
                                     </div>
                                 )
